@@ -3,77 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Descubra, avalie e compartilhe seus animes favoritos.">
-  <title>Anime List</title>
-  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
-  <link rel="stylesheet" href="css/style.css">
-  <script type="module" src="js/main.js"></script>
+  <title>AnimeList</title>
+  <meta name="description" content="Descubra, avalie e compartilhe seus animes favoritos, com uma ordem sugerida para quem está começando.">
+  <meta name="theme-color" content="#140F26">
+  <meta property="og:title" content="AnimeList">
+  <meta property="og:description" content="Descubra, avalie e compartilhe seus animes favoritos.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/app.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <img class="brand-logo" src="assets/logo.svg" alt="" width="56" height="56">
-      <div>
-        <h1>Anime<span>List</span></h1>
-        <span class="brand-kana">アニメ・リスト</span>
+  <a class="pular" href="#lista">Pular para a lista</a>
+
+  <header class="topo">
+    <div class="topo-conteudo">
+      <div class="marca">
+        <svg class="marca-logo" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#7C5CFF"/>
+              <stop offset="1" stop-color="#FF9526"/>
+            </linearGradient>
+          </defs>
+          <rect width="64" height="64" rx="18" fill="url(#logo-grad)"/>
+          <path d="M32 9 L38.2 23.8 L54 25.1 L41.9 35.3 L45.6 50.9 L32 42.6 L18.4 50.9 L22.1 35.3 L10 25.1 L25.8 23.8 Z" fill="#140F26"/>
+          <path d="M27.5 27 L27.5 39.5 L38 33.2 Z" fill="#F2EEF9"/>
+        </svg>
+        <h1>AnimeList</h1>
       </div>
+      <p class="topo-texto">Descubra, avalie e compartilhe seus animes favoritos.</p>
     </div>
-    <p>Descubra, avalie e compartilhe seus animes favoritos.</p>
+    <span class="kana" aria-hidden="true">アニメ・リスト</span>
   </header>
 
   <main>
-    <section class="start-guide" aria-labelledby="start-guide-title">
-      <h2 id="start-guide-title">Por onde começar</h2>
-      <p class="start-guide-sub">
-        Se você tá começando agora, essa é uma ordem sugerida pra ir do mais leve e acessível
-        até os mais intensos — assista nessa sequência.
-      </p>
-      <ol class="path" id="path"></ol>
+    <section class="inicio" aria-labelledby="inicio-titulo">
+      <div class="inicio-cabecalho">
+        <div>
+          <h2 id="inicio-titulo">Por onde começar</h2>
+          <p class="inicio-texto">Começando agora? Siga esta ordem: ela vai dos mais leves e acessíveis até os mais intensos.</p>
+        </div>
+        <div class="trilha-setas">
+          <button type="button" class="seta" data-rolar="-1" aria-label="Ver animes anteriores da ordem">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="seta" data-rolar="1" aria-label="Ver próximos animes da ordem">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+      <ol class="trilha" id="trilha"></ol>
     </section>
 
-    <div class="controls">
-      <input id="search" type="search" placeholder="Pesquisar anime..." aria-label="Pesquisar anime" autocomplete="off">
-      <div class="row" id="categories" role="group" aria-label="Filtrar por categoria"></div>
-      <div class="row">
-        <span class="sort-label">Ordenar:</span>
-        <div class="row" id="sorts" role="group" aria-label="Ordenar resultados"></div>
+    <section class="catalogo" id="lista" aria-labelledby="catalogo-titulo" tabindex="-1">
+      <h2 id="catalogo-titulo" class="sr-only">Todos os animes</h2>
+
+      <div class="filtros">
+        <label class="busca">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+          <span class="sr-only">Pesquisar anime</span>
+          <input id="busca" type="search" placeholder="Pesquisar anime" autocomplete="off" spellcheck="false">
+        </label>
+        <div class="categorias" id="categorias" role="group" aria-label="Filtrar por categoria"></div>
+        <div class="filtros-rodape">
+          <p class="contador" id="contador" aria-live="polite"></p>
+          <div class="ordem" id="ordem" role="group" aria-label="Ordenar lista"></div>
+        </div>
       </div>
-    </div>
 
-    <section id="grid" class="grid" aria-label="Lista de animes"></section>
-    <p id="empty" class="empty" hidden>Nenhum anime encontrado.</p>
-
-    <p id="storage-note" class="note"></p>
+      <div class="grade" id="grade"></div>
+    </section>
   </main>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer class="rodape">
+    <p id="aviso-notas">Carregando notas…</p>
+  </footer>
 
-  <template id="card-template">
-    <article class="card">
-      <div class="poster"><img alt="" loading="lazy" decoding="async"></div>
-      <div class="card-body">
-        <h3 class="card-title"></h3>
-        <div class="card-tags"></div>
-        <div class="average">
-          <span class="stars-mini" aria-hidden="true">
-            <span class="stars-bg">★★★★★</span>
-            <span class="stars-fg">★★★★★</span>
-          </span>
-          <span class="average-value"></span>
-        </div>
-        <div class="vote-count"></div>
-        <div class="rate">
-          <p>Sua avaliação:</p>
-          <div class="star-input" role="radiogroup">
-            <span class="stars-bg" aria-hidden="true">★★★★★</span>
-            <span class="stars-fg" aria-hidden="true">★★★★★</span>
-            <span class="star-hits"></span>
-          </div>
-          <div class="pending-score"></div>
-          <button type="button" class="confirm">Confirmar avaliação</button>
-        </div>
-      </div>
-    </article>
-  </template>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <noscript><p class="sem-js">Ative o JavaScript para ver a lista de animes.</p></noscript>
 </body>
 </html>
