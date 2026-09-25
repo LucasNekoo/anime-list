@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Descubra, avalie e compartilhe seus animes favoritos.">
+  <title>Anime List</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img class="brand-logo" src="assets/logo.svg" alt="" width="56" height="56">
+      <div>
+        <h1>Anime<span>List</span></h1>
+        <span class="brand-kana">アニメ・リスト</span>
+      </div>
+    </div>
+    <p>Descubra, avalie e compartilhe seus animes favoritos.</p>
+  </header>
+
+  <main>
+    <section class="start-guide" aria-labelledby="start-guide-title">
+      <h2 id="start-guide-title">Por onde começar</h2>
+      <p class="start-guide-sub">
+        Se você tá começando agora, essa é uma ordem sugerida pra ir do mais leve e acessível
+        até os mais intensos — assista nessa sequência.
+      </p>
+      <ol class="path" id="path"></ol>
+    </section>
+
+    <div class="controls">
+      <input id="search" type="search" placeholder="Pesquisar anime..." aria-label="Pesquisar anime" autocomplete="off">
+      <div class="row" id="categories" role="group" aria-label="Filtrar por categoria"></div>
+      <div class="row">
+        <span class="sort-label">Ordenar:</span>
+        <div class="row" id="sorts" role="group" aria-label="Ordenar resultados"></div>
+      </div>
+    </div>
+
+    <section id="grid" class="grid" aria-label="Lista de animes"></section>
+    <p id="empty" class="empty" hidden>Nenhum anime encontrado.</p>
+
+    <p id="storage-note" class="note"></p>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <template id="card-template">
+    <article class="card">
+      <div class="poster"><img alt="" loading="lazy" decoding="async"></div>
+      <div class="card-body">
+        <h3 class="card-title"></h3>
+        <div class="card-tags"></div>
+        <div class="average">
+          <span class="stars-mini" aria-hidden="true">
+            <span class="stars-bg">★★★★★</span>
+            <span class="stars-fg">★★★★★</span>
+          </span>
+          <span class="average-value"></span>
+        </div>
+        <div class="vote-count"></div>
+        <div class="rate">
+          <p>Sua avaliação:</p>
+          <div class="star-input" role="radiogroup">
+            <span class="stars-bg" aria-hidden="true">★★★★★</span>
+            <span class="stars-fg" aria-hidden="true">★★★★★</span>
+            <span class="star-hits"></span>
+          </div>
+          <div class="pending-score"></div>
+          <button type="button" class="confirm">Confirmar avaliação</button>
+        </div>
+      </div>
+    </article>
+  </template>
+</body>
+</html>
